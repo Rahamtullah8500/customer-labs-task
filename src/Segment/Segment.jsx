@@ -76,6 +76,9 @@ const Segment = () => {
 
   const hanldeCancel = () => {
     setSeletedSchema("Add schema to segment");
+    setSegmentData({ segment_name: "",schema: [],})
+    setSchemas([])
+    
   };
 
   const handleDeleteSchema = (id) => {
@@ -87,18 +90,28 @@ const Segment = () => {
     const schemaData = JSON.stringify(segmentData);
     const url = "https://webhook.site/f794b400-4ae4-4dd6-bceb-b1fab391a61f"; // Replace with your actual API URL
   
-    axios.post('http://localhost:8080/' + url, schemaData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      timeout: 5000,
-    })
-    .then((res) => {
-      console.log("sent successfully:", res.data);
-    })
-    .catch((err) => {
-      console.log("Error:", err);
-    });
+    if(segmentData.schema.length >= 1){
+      axios.post('http://localhost:8080/' + url, schemaData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        timeout: 5000,
+      })
+      .then((res) => {
+        console.log("sent successfully:", res.data);
+        alert('Data has been sent successfully:)')
+        setSchemas([])
+        setSegmentData({ segment_name: "",schema: [],})
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+      });
+    }
+    else{
+      alert('Please add a Schema first!');
+    }
+
+
   };
   
 
@@ -137,11 +150,9 @@ const Segment = () => {
               className="segment-name-input"
               onChange={handleSegmentName}
               placeholder="Name of the segment"
+              required
             />
-            <div className="segment-popup-text">
-              To save your segment, you need to add the schemas to build the
-              query
-            </div>
+            <div className="segment-popup-text">To save your segment, you need to add the schemas to build the query</div>
             <div className="segment-legend-container">
               <div className="segment-legend-body">
                 <div

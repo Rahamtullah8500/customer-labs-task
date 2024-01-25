@@ -1,4 +1,5 @@
 {
+  "homepage": "https://Rahamtullah8500.github.io/customer-labs-task",
   "name": "customer_labs_task",
   "version": "0.1.0",
   "private": true,
@@ -17,6 +18,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "start-proxy": "node corsProxy.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
